@@ -11,10 +11,8 @@ interface JwtDecoded {
 }
 exports.handler = async function (event: APIGatewayProxyEvent, context: Context): Promise<any> {
     console.log("getAuthUser Request: ", event);
-    console.log("getAuthUser auth header : ", event.headers.Authorization);
     const accessToken = event.headers["Authorization"]?.split(" ")[1] || "";
     console.log("getAuthUser auth header : ", accessToken);
-    console.log("need to check header and verify access token");
     const publicAddress = event.queryStringParameters?.publicAddress;
     try {
         const secret = "shhhh";

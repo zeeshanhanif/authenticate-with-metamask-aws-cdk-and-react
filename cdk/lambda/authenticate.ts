@@ -4,13 +4,11 @@ import { recoverPersonalSignature } from 'eth-sig-util';
 // In tsconfig.json set esModuleInterop to true for ethereumjs-util to work in import style
 import {bufferToHex} from 'ethereumjs-util';
 import { sign as jwtSign } from 'jsonwebtoken'
-//const ethUtil = require('ethereumjs-util');
 
 const documentClient = new DynamoDB.DocumentClient();
 exports.handler = async function (event: APIGatewayProxyEvent, context: Context): Promise<APIGatewayProxyResult> {
     console.log("Authenticate Request: ", event);
     console.log("parameter1 = ", event.body)
-    console.log("parameter2 = ", JSON.parse(event.body||""));
     const body = JSON.parse(event.body || "");
     
     const params = {
@@ -55,7 +53,6 @@ exports.handler = async function (event: APIGatewayProxyEvent, context: Context)
         }
     },
     secret);
-    console.log("here normal return");
     return response({accessToken});
 }
 

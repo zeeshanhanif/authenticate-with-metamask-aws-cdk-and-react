@@ -3,13 +3,11 @@ import * as lambda from '@aws-cdk/aws-lambda';
 import * as apigw from '@aws-cdk/aws-apigateway';
 import * as dynamo from '@aws-cdk/aws-dynamodb';
 import * as iam from '@aws-cdk/aws-iam'
-import { SingletonFunction } from '@aws-cdk/aws-lambda';
 
 export class CdkStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // The code that defines your stack goes here
 
     const userTable = new dynamo.Table(this, "userTable",{
       tableName: "Users",

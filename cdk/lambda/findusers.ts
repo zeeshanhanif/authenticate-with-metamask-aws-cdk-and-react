@@ -6,7 +6,7 @@ exports.handler = async function (event: APIGatewayProxyEvent, context: Context)
     console.log("FindUse Request: ", event);
     
     /*
-    // this is if we want to keey id as separate but it will cost in searching
+    // this is if we want to keep id as separate but it will cost in searching
     const params = {
         TableName: process.env.TABLE_NAME || "",
         FilterExpression: "#pa = :pavalue",
