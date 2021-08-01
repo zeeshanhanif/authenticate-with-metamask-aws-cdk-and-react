@@ -7,7 +7,6 @@ const documentClient = new DynamoDB.DocumentClient();
 exports.handler = async function (event: APIGatewayProxyEvent, context: Context): Promise<APIGatewayProxyResult> {
     console.log("Signup Request: ", event);
     console.log("parameter = ", event.body)
-    console.log("parameter = ", JSON.parse(event.body||""));
     const body = JSON.parse(event.body || "");
     const newUser = {
         //id: uuidv4(),
