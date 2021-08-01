@@ -5,12 +5,10 @@ import { initWeb3 } from "./setupSlice";
 const LS_KEY = 'login:auth';
 
 const findUser = async(publicAddress)=>{
-    console.log("in finduser = ",publicAddress);
     try {
         const response = await fetch(`${env.API_URL}${env.SERVER_EXISTING_USERS}?publicAddress=${publicAddress}`);
         //const userArray = await response.json();
         //return userArray.length && userArray[0];
-        console.log("Resonse in findUser = ", response);
         const data = await response.json();
         return data.Item;
     }
@@ -61,7 +59,6 @@ const authenticate = async(user, signature)=>{
 			},
             body: JSON.stringify({ publicAddress: user.publicAddress, signature }),
         }); 
-        console.log("Resonse in authenticate = ", response);
         const data = await response.json();
         if(data.isError){
             throw Error(data.error);
@@ -76,19 +73,15 @@ const authenticate = async(user, signature)=>{
 export const login = createAsyncThunk(
     "Login",
     async(data,thunkAPI)=>{
-        console.log("thunk API in login = ",thunkAPI);
         try {
             let user = await findUser(data.publicAddress);
-            console.log("after find user = ",user);
             if(!user){
                 user = await signup(data.publicAddress);
-                console.log("after signup = ",user);
             }
             console.log("user = ", user);
             const signature = await signMessage(user,thunkAPI);
             console.log("after signature = ",signature);
             const auth = await authenticate(user,signature);
-            //const auth = {name:"test"};
             window.localStorage.setItem(LS_KEY, JSON.stringify(auth));
             return {
                 auth,
@@ -105,7 +98,6 @@ export const login = createAsyncThunk(
 export const loadlocalStorage = createAsyncThunk(
     "LoadlocalStorage",
     async(data,thunkAPI)=>{
-        console.log("thunk API in login = ",thunkAPI);
         try {
             const ls = window.localStorage.getItem(LS_KEY);
 		    const auth = ls && JSON.parse(ls);
@@ -127,7 +119,6 @@ export const loadlocalStorage = createAsyncThunk(
 export const authLocalStorageToken = createAsyncThunk(
     "AuthLocalStorageToken",
     async(data,thunkAPI)=>{
-        console.log("thunk API in login = ",thunkAPI);
         try {
             const address = thunkAPI.getState().setupReducer.address;
             const auth = thunkAPI.getState().authenticationReducer.auth;
@@ -137,7 +128,6 @@ export const authLocalStorageToken = createAsyncThunk(
                         Authorization: `Bearer ${auth.accessToken}`,
                     },
                 });
-                console.log("Response in authLocalStorageToken = ", response);
                 const data = await response.json();
                 console.log("after response authLocalStorageToken = ",data);
                 return {
@@ -172,8 +162,8 @@ const authenticationSlice = createSlice({
     },
     extraReducers: {
         [login.fulfilled]: (state,action)=>{
-            console.log("In login fullfill = ",state);
-            console.log("In login fullfill = ",action);
+            //console.log("In login fullfill = ",state);
+            //console.log("In login fullfill = ",action);
             state.auth = action.payload.auth;
             state.user = action.payload.user;
             state.loginSignupError = "";
@@ -181,21 +171,17 @@ const authenticationSlice = createSlice({
             
         },
         [login.pending]: (state,action)=>{
-            console.log("In login pending = ",state);
-            console.log("In login pending = ",action);
             state.loginSignupError = "";
             state.authLoading = true;
             
         },
         [login.rejected]: (state,action)=>{
-            console.log("In login rejected = ",state);
-            console.log("In login rejected = ",action);
             state.loginSignupError = action.payload;
             state.authLoading = false;
         },
         [loadlocalStorage.fulfilled]: (state,action)=>{
-            console.log("In loadlocalAuth fullfill = ",state);
-            console.log("In loadlocalAuth fullfill = ",action);
+            //console.log("In loadlocalAuth fullfill = ",state);
+            //console.log("In loadlocalAuth fullfill = ",action);
             if(action.payload) {
                 state.auth = action.payload.auth;
             }
@@ -204,21 +190,17 @@ const authenticationSlice = createSlice({
             
         },
         [loadlocalStorage.pending]: (state,action)=>{
-            console.log("In loadlocalAuth pending = ",state);
-            console.log("In loadlocalAuth pending = ",action);
             state.loginSignupError = "";
             state.authLoading = true;
             
         },
         [loadlocalStorage.rejected]: (state,action)=>{
-            console.log("In loadlocalAuth rejected = ",state);
-            console.log("In loadlocalAuth rejected = ",action);
             state.loginSignupError = action.payload;
             state.authLoading = false;
         },
         [authLocalStorageToken.fulfilled]: (state,action)=>{
-            console.log("In authLocalStorageToken fullfill = ",state);
-            console.log("In authLocalStorageToken fullfill = ",action);
+            //console.log("In authLocalStorageToken fullfill = ",state);
+            //console.log("In authLocalStorageToken fullfill = ",action);
             if(action.payload) {
                 state.user = action.payload.user;
             }
@@ -227,15 +209,11 @@ const authenticationSlice = createSlice({
             
         },
         [authLocalStorageToken.pending]: (state,action)=>{
-            console.log("In authLocalStorageToken pending = ",state);
-            console.log("In authLocalStorageToken pending = ",action);
             state.loginSignupError = "";
             state.authLoading = true;
             
         },
         [authLocalStorageToken.rejected]: (state,action)=>{
-            console.log("In authLocalStorageToken rejected = ",state);
-            console.log("In authLocalStorageToken rejected = ",action);
             state.loginSignupError = action.payload;
             state.authLoading = false;
         },

@@ -8,11 +8,8 @@ function Home() {
         return state.setupReducer
     })
     const {loginSignupError,auth, authLoading} = useSelector((state)=>{
-        console.log("state = ", state);
         return state.authenticationReducer
     })
-
-    
 
     return (
     <div>

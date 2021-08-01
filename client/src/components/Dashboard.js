@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 function Dashboard() {
 
   const {auth, authLoading} = useSelector((state)=>{
-    console.log("state = ", state);
     return state.authenticationReducer
   })
 

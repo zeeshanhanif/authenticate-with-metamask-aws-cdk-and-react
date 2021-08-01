@@ -4,12 +4,6 @@ import Web3 from "web3";
 export const initWeb3 = createAsyncThunk(
     "InitWeb3",
     async(data,thunkAPI)=>{
-        console.log("thunk API = ",thunkAPI);
-        console.log("window.web3 = ",window.web3);
-        console.log("Web3 = ",Web3);
-        console.log("Web3.givenProvider = ",Web3.givenProvider);
-        console.log("window.ethereum = ",window.ethereum);
-        console.log("window.ethereum.isMetaMask = ",window.ethereum.isMetaMask);
         try {
             if(Web3.givenProvider){
                 
@@ -59,7 +53,7 @@ const setupSlice = createSlice({
     },
     extraReducers: {
         [initWeb3.fulfilled]: (state,action)=>{
-            console.log("In fullfill = ",state);
+            //console.log("In fullfill = ",state);
             console.log("In fullfill = ",action);
             state.web3 = action.payload.web3;
             state.contract = action.payload.contract;
@@ -70,8 +64,8 @@ const setupSlice = createSlice({
 
         },
         [initWeb3.pending]: (state,action)=>{
-            console.log("In pending = ",state);
-            console.log("In pending = ",action);
+            //console.log("In pending = ",state);
+            //console.log("In pending = ",action);
             state.web3LoadingError = "";
             state.settupLoading = true;
             state.web3 = null;
@@ -80,8 +74,8 @@ const setupSlice = createSlice({
             
         },
         [initWeb3.rejected]: (state,action)=>{
-            console.log("In rejected = ",state);
-            console.log("In rejected = ",action);
+            //console.log("In rejected = ",state);
+            //console.log("In rejected = ",action);
             state.web3LoadingError = action.payload;
             state.settupLoading = false;
         },
