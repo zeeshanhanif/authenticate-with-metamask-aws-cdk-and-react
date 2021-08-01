@@ -102,31 +102,6 @@ export const login = createAsyncThunk(
     }
 )
 
-/**
- * console.log("in finduser = ",publicAddress);
-    try {
-        const response = await fetch(`${env.API_URL}${env.SERVER_EXISTING_USERS}?publicAddress=${publicAddress}`);
-        //const userArray = await response.json();
-        //return userArray.length && userArray[0];
-        console.log("Resonse in findUser = ", response);
-        const data = await response.json();
-        return data.Item;
-    }
-    catch(error){
-        throw Error("FindUser: "+error.message);
-    }
- * 
-
-
-                    /*
-                const response = await fetch(`${env.API_URL}${env.AUTH_USER}?publicAddress=${"test"}`);
-                console.log("Response in loadlocalAuth = ", response);
-                const data = await response.json();
-                return {
-                    auth,
-                    user: data.Item
-                }*/
-
 export const loadlocalStorage = createAsyncThunk(
     "LoadlocalStorage",
     async(data,thunkAPI)=>{
@@ -148,15 +123,7 @@ export const loadlocalStorage = createAsyncThunk(
         }
     }
 )
-/*
-const response = await fetch(`${env.API_URL}${env.AUTH_USER}?publicAddress=${"test"}`);
-                console.log("Response in loadlocalAuth = ", response);
-                const data = await response.json();
-                return {
-                    auth,
-                    user: data.Item
-                }
-                */
+
 export const authLocalStorageToken = createAsyncThunk(
     "AuthLocalStorageToken",
     async(data,thunkAPI)=>{
@@ -197,8 +164,10 @@ const authenticationSlice = createSlice({
         authLoading: false
     },
     reducers: {
-        somefuntion2: ()=>{
-
+        clearAuth: (state)=>{
+            localStorage.removeItem(LS_KEY);
+            state.auth = null;
+            state.user = null;
         }
     },
     extraReducers: {
@@ -275,4 +244,4 @@ const authenticationSlice = createSlice({
 })
 
 export const authenticationReducer = authenticationSlice.reducer;
-export const { somefuntion2 } = authenticationSlice.actions;
+export const { clearAuth } = authenticationSlice.actions;

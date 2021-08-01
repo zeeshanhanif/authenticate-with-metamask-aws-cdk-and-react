@@ -12,11 +12,7 @@ function Home() {
         return state.authenticationReducer
     })
 
-    useEffect(()=>{
-        if(auth && auth.accessToken) {
-            history.push("/dashboard")
-        }
-    },[auth])
+    
 
     return (
     <div>

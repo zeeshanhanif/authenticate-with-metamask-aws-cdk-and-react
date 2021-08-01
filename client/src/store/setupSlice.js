@@ -51,8 +51,10 @@ const setupSlice = createSlice({
         settupLoading: false,
     },
     reducers: {
-        somefunction: ()=>{
-
+        clearWeb3: (state)=>{
+            state.web3 = null;
+            state.address = null;
+            state.balance = null;
         }
     },
     extraReducers: {
@@ -87,4 +89,4 @@ const setupSlice = createSlice({
 })
 
 export const setupReducer = setupSlice.reducer;
-export const { somefunction } = setupSlice.actions;
+export const { clearWeb3 } = setupSlice.actions;
